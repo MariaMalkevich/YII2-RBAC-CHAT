@@ -123,5 +123,23 @@ a.desc:after {
     color: #0056b3;
 }
 
+.chat {
+    background: #17a2b8;
+    border-radius: 12px;
+    color: #fff;
+}
+
+.name {
+    padding-top: 25px; 
+}
+
+.message {
+    padding-top: 25px; 
+}
+
+.ban {
+    color: #dc3545;
+}
+
 
 

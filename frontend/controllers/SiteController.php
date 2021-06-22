@@ -77,6 +77,7 @@ class SiteController extends Controller
     {   
         $chat= Chat::find()->where(['status' => 1])->orderBy(['id' => SORT_DESC])->all();
         
+        
         $model = new ChatForm();    
         if ($model->load(Yii::$app->request->post())) {
             if ($model->save()) {
