@@ -140,6 +140,12 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->getPrimaryKey();
     }
+    
+    
+    public function getUsername()
+    {
+        return \Yii::$app->user->identity->username;
+    }
 
     /**
      * {@inheritdoc}

@@ -3,25 +3,18 @@
 namespace frontend\models;
 
 use Yii;
-use common\models\User;
 
 /**
  * This is the model class for table "chat".
  *
  * @property int $id
- * @property int|null $userId
- * @property string|null $message
- * @property string $updateDate
+ * @property string $user_id
+ * @property string $user_name
+ * @property string $message
+ * @property int $created_at
  */
 class Chat extends \yii\db\ActiveRecord
-{   
-    
-    public $userModel;
-    public $userField;
-    
-    
-    private $user;
-    
+{
     /**
      * {@inheritdoc}
      */
@@ -36,9 +29,10 @@ class Chat extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['userId'], 'integer'],
+            [['user_id', 'user_name', 'message', 'created_at'], 'required'],
             [['message'], 'string'],
-            [['updateDate'], 'safe'],
+            [['created_at'], 'integer'],
+            [['user_id', 'user_name'], 'string', 'max' => 255],
         ];
     }
 
@@ -49,18 +43,10 @@ class Chat extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'userId' => 'User ID',
+            'user_id' => 'User ID',
+            'user_name' => 'User Name',
             'message' => 'Message',
-            'updateDate' => 'Update Date',
+            'created_at' => 'Created At',
         ];
-    }
-    
-    
-     /**
-     * @param User $user
-     */
-    public function __construct(User $user)
-    {
-        $this->user = $user;
     }
 }
