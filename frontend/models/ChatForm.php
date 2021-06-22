@@ -13,9 +13,8 @@ use frontend\models\Chat;
 class ChatForm extends Model
 {
     public $message;
+    public $status;
    
-   
-    private $user;
 
     /**
      * {@inheritdoc}
@@ -23,18 +22,19 @@ class ChatForm extends Model
     public function rules()
     {
         return [
+            ['status', 'default', 'value' => '1'],
             [['message'], 'required'],
             [['message'], 'string'],
         ];
     }
 
-    /**
-     * @param User $user
-     */
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
+//    /**
+//     * @param User $user
+//     */
+//    public function __construct(User $user)
+//    {
+//        $this->user = $user;
+//    }
 
     /**
      * @return boolean
@@ -43,9 +43,10 @@ class ChatForm extends Model
     {
         if ($this->validate()) {
             $post = new Chat();
-            $post->user_name = $this->user->getUsername();
-            $post->user_id = $this->user->getId();
+            $post->user_name = Yii::$app->user->identity->username;
+            $post->user_id = Yii::$app->user->identity->id;
             $post->message = $this->message;
+            $post->status = $this->status;
             $post->created_at = time();
 
             return $post->save(false); 

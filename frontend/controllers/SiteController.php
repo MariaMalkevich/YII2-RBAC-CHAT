@@ -75,10 +75,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {   
-        $chat= Chat::find()->orderBy(['id' => SORT_DESC])->all();
-       
-        $model = new ChatForm(Yii::$app->user->identity);
-                  
+        $chat= Chat::find()->where(['status' => 1])->orderBy(['id' => SORT_DESC])->all();
+        
+        $model = new ChatForm();    
         if ($model->load(Yii::$app->request->post())) {
             if ($model->save()) {
                 Yii::$app->session->setFlash('success', 'Post');
@@ -90,7 +89,6 @@ class SiteController extends Controller
                'chat' => $chat,
           ]);
     }
-    
     
 
     /**
@@ -244,45 +242,5 @@ class SiteController extends Controller
         ]);
     }
     
-    
-//       public function actionRoli() {
-//   $admin = Yii::$app->authManager->createRole('admin');
-//   $admin->description = 'Аdmin';
-//   Yii::$app->authManager->add($admin);
-//   
-//    $user = Yii::$app->authManager->createRole('accountUser');
-//    $user->description = 'accountUser';
-//    Yii::$app->authManager->add($user);  
-//
-//  
-//   $business = Yii::$app->authManager->createRole('accountBusiness');
-//  $business->description = 'AccountBusiness';
-//   Yii::$app->authManager->add($business); 
-//
-//  $user = Yii::$app->authManager->createRole('accountUser');
-//  $user->description = 'AccountUser';
-//  Yii::$app->authManager->add($user);
-////   
-////   $ban = Yii::$app->authManager->createRole('accountBanUser');
-////   $ban->description = 'AccountBanUser';
-////   Yii::$app->authManager->add($ban); 
-////   
-////// $Admin = Yii::$app->authManager->createPermission('Admin');
-//////  $Admin->description = 'Admin';
-//////  Yii::$app->authManager->add($Admin);
-//$CabinetUser = Yii::$app->authManager->createPermission('cabinetUser');
-//$CabinetUser->description = 'cabinetUsercabinetUser';
-//Yii::$app->authManager->add($CabinetUser);
-////   
-// $role_b = Yii::$app->authManager->getRole('accountUser');
-// $permit_b = Yii::$app->authManager->getPermission('cabinetUser');
-// Yii::$app->authManager->addChild($role_b, $permit_b);
-//// 
-//////  $role_c = Yii::$app->authManager->getRole('admin');
-//////  $permit_c = Yii::$app->authManager->getPermission('Admin');
-//////  Yii::$app->authManager->addChild($role_c, $permit_c);
-//////      
-// return 2;
-//  
-// }
+ 
 }

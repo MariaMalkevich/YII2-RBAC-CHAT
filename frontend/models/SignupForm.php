@@ -37,26 +37,52 @@ class SignupForm extends Model
         ];
     }
 
-    /**
-     * Signs user up.
-     *
-     * @return bool whether the creating new account was successful and email was sent
+//    /**
+//     * Signs user up.
+//     *
+//     * @return bool whether the creating new account was successful and email was sent
+//     */
+//    public function signup()
+//    {
+//        if (!$this->validate()) {
+//            return null;
+//        }
+//        
+//        $user = new User();
+//        $user->username = $this->username;
+//        $user->email = $this->email;
+//        $user->setPassword($this->password);
+//        $user->generateAuthKey();
+//        $user->generateEmailVerificationToken();
+//        return $user->save() && $this->sendEmail($user);
+//
+//    }
+    
+    
+    
+     /**
+     * Save user
+     * @return User|null
      */
     public function signup()
     {
-        if (!$this->validate()) {
-            return null;
-        }
-        
-        $user = new User();
-        $user->username = $this->username;
-        $user->email = $this->email;
-        $user->setPassword($this->password);
-        $user->generateAuthKey();
-        $user->generateEmailVerificationToken();
-        return $user->save() && $this->sendEmail($user);
-
+        if ($this->validate()) {
+            $user = new User();
+            $user->username = $this->username;
+            $user->email = $this->email;
+            $user->setPassword($this->password);
+            $user->generateAuthKey();
+            $user->generateEmailVerificationToken();
+            $user->save(false);
+            // the following three lines were added:
+           $auth = Yii::$app->authManager;
+           $userRole = $auth->getRole('accountUser');
+           $auth->assign($userRole, $user->getId());
+            
+             return $user;
     }
+    return null; 
+        }
 
     /**
      * Sends confirmation email to user
