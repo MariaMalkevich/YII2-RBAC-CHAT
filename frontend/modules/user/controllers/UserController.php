@@ -17,8 +17,6 @@ use yii\filters\AccessControl;
 class UserController extends Controller
 {   
     
-    
-    
      /**
      * {@inheritdoc}
      */
